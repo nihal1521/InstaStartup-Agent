@@ -140,12 +140,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - OpenAI for GPT-4 and DALL·E 3
 - Vercel for hosting and deployment
 - Firebase for backend services
-- The open-source community for amazing tools
-
-## 📞 Support
-
-For support, email support@instastartup.com or create an issue on GitHub.
-
----
-
-Built with ❤️ by the InstaStartup Team
+- The open-source community for amazing tool
