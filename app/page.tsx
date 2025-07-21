@@ -1,6 +1,7 @@
 "use client";
 
 import { LoadingState } from '@/components/loading-state';
+import { MultiAgentDashboard } from '@/components/multi-agent-dashboard';
 import { StartupForm } from '@/components/startup-form';
 import { StartupGallery } from '@/components/startup-gallery';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -8,6 +9,7 @@ import { AIProvider } from '@/utils/ai-providers';
 import { motion } from 'framer-motion';
 import { Rocket, Sparkles, Target, Zap } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export default function HomePage() {
@@ -100,6 +102,14 @@ export default function HomePage() {
           </span>
         </motion.div>
         <ThemeToggle />
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+        >
+          <Link href="/agents" className="glass rounded-xl px-4 py-2 hover:glass-strong transition-all duration-300 text-sm font-medium">
+            Multi-Agent System
+          </Link>
+        </motion.div>
       </header>
 
       <div className="relative z-10 container mx-auto px-6 py-12">
