@@ -74,7 +74,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@next/swc-win32-x64-msvc": "^14.2.5",
     "cross-env": "^7.0.3"
   }
 }
