@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { AIProviderSelector } from '@/components/ai-provider-selector';
 import { AIProvider } from '@/utils/ai-providers';
@@ -15,6 +16,7 @@ interface StartupFormProps {
 export function StartupForm({ onGenerate }: StartupFormProps) {
   const [idea, setIdea] = useState('');
   const [selectedProvider, setSelectedProvider] = useState<AIProvider>('openai');
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -126,6 +128,15 @@ export function StartupForm({ onGenerate }: StartupFormProps) {
         <div className="mt-8">
           <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 text-center">
             💡 Need inspiration? Try one of these trending ideas:
+          </p>
+          <div className="text-center mb-4">
+            <button
+              onClick={() => router.push('/discovery')}
+              className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
+            >
+              Or start with our Product Discovery Chat →
+            </button>
+          </div>
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {exampleIdeas.map((example, index) => (

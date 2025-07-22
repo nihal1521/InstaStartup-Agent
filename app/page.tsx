@@ -1,6 +1,7 @@
 "use client";
 
 import { LoadingState } from '@/components/loading-state';
+import { DiscoveryResults } from '@/components/discovery-results';
 import { MultiAgentDashboard } from '@/components/multi-agent-dashboard';
 import { StartupForm } from '@/components/startup-form';
 import { StartupGallery } from '@/components/startup-gallery';
@@ -11,11 +12,15 @@ import { Rocket, Sparkles, Target, Zap } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useState } from 'react';
+import React from 'react';
 
 export default function HomePage() {
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showDiscoveryResults, setShowDiscoveryResults] = useState(false);
+  const [discoveryData, setDiscoveryData] = useState(null);
   const router = useRouter();
 
+  // Check for discovery mode on component mount
   const handleGenerate = async (idea: string, provider: AIProvider) => {
     setIsGenerating(true);
     try {
@@ -52,6 +57,20 @@ export default function HomePage() {
     }
   };
 
+  // Check if we're coming from discovery
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isDiscovery = urlParams.get('discovery');
+    
+    if (isDiscovery) {
+      const storedData = sessionStorage.getItem('discoveryData');
+      if (storedData) {
+        setDiscoveryData(JSON.parse(storedData));
+        setShowDiscoveryResults(true);
+      }
+    }
+  }, []);
+
   const features = [
     {
       icon: Sparkles,
@@ -77,6 +96,12 @@ export default function HomePage() {
 
   if (isGenerating) {
     return <LoadingState />;
+  }
+
+  if (showDiscoveryResults && discoveryData) {
+    return (
+      <DiscoveryResults discoveryData={discoveryData} onStartBuilding={() => setShowDiscoveryResults(false)} />
+    );
   }
 
   return (
@@ -106,6 +131,9 @@ export default function HomePage() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
         >
+          <Link href="/discovery" className="glass rounded-xl px-4 py-2 hover:glass-strong transition-all duration-300 text-sm font-medium mr-4">
+            Product Discovery
+          </Link>
           <Link href="/agents" className="glass rounded-xl px-4 py-2 hover:glass-strong transition-all duration-300 text-sm font-medium">
             Multi-Agent System
           </Link>
@@ -213,6 +241,14 @@ export default function HomePage() {
                 className="px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 Get Started Free
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => router.push('/discovery')}
+                className="px-8 py-3 glass border-2 border-indigo-200 dark:border-indigo-700 rounded-xl font-semibold hover:glass-strong transition-all duration-300"
+              >
+                Start with Discovery
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05 }}
