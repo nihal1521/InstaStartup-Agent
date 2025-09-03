@@ -137,7 +137,6 @@ export function StartupForm({ onGenerate }: StartupFormProps) {
               Or start with our Product Discovery Chat →
             </button>
           </div>
-          </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {exampleIdeas.map((example, index) => (
               <motion.button
